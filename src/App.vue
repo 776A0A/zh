@@ -1,10 +1,21 @@
 <template>
-    <div id="nav">
+    <div class="container">
         <router-link to="/">Home</router-link> |
         <router-link to="/about">About</router-link>
     </div>
     <router-view />
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+export default defineComponent({
+    setup() {
+        //
+    },
+})
+</script>
 
 <style lang="less">
 #app {
