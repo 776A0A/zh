@@ -1,18 +1,50 @@
 <template>
     <div class="container">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link>
+        <column-list :list="list" />
     </div>
-    <router-view />
+    <!-- <router-view /> -->
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import ColumnList, { ColumnPorps } from './components/ColumnList.vue'
 
 export default defineComponent({
+    components: { ColumnList },
     setup() {
-        //
+        const list: ColumnPorps[] = [
+            {
+                description: '234',
+                id: 1,
+                title: '3',
+                avatar:
+                    'https://tse1-mm.cn.bing.net/th?id=OIP.Sz2t3UycZ358frC6NaJxlwHaIK&w=185&h=204&c=8&rs=1&qlt=90&pid=3.1&rm=2',
+            },
+            {
+                description: '234',
+                id: 1,
+                title: '3',
+                avatar:
+                    'https://tse1-mm.cn.bing.net/th?id=OIP.Sz2t3UycZ358frC6NaJxlwHaIK&w=185&h=204&c=8&rs=1&qlt=90&pid=3.1&rm=2',
+            },
+            {
+                description: '234',
+                id: 1,
+                title: '3',
+                avatar:
+                    'https://tse1-mm.cn.bing.net/th?id=OIP.Sz2t3UycZ358frC6NaJxlwHaIK&w=185&h=204&c=8&rs=1&qlt=90&pid=3.1&rm=2',
+            },
+            {
+                description: '234',
+                id: 1,
+                title: '3',
+                avatar:
+                    'https://tse1-mm.cn.bing.net/th?id=OIP.Sz2t3UycZ358frC6NaJxlwHaIK&w=185&h=204&c=8&rs=1&qlt=90&pid=3.1&rm=2',
+            },
+        ]
+
+        return { list }
     },
 })
 </script>
