@@ -18,8 +18,6 @@ export default defineComponent({
                 description: '234',
                 id: 1,
                 title: '3',
-                avatar:
-                    'https://tse1-mm.cn.bing.net/th?id=OIP.Sz2t3UycZ358frC6NaJxlwHaIK&w=185&h=204&c=8&rs=1&qlt=90&pid=3.1&rm=2',
             },
             {
                 description: '234',
