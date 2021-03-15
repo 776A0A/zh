@@ -1,17 +1,23 @@
 <template>
     <div class="container">
+        <global-header :user="currentUser" />
         <column-list :list="list" />
     </div>
-    <!-- <router-view /> -->
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnPorps } from './components/ColumnList.vue'
+import GlobalHeader, { UserProps } from '@/components/GlobalHeader.vue'
+
+const currentUser: UserProps = {
+    isLogin: true,
+    name: 'wj',
+}
 
 export default defineComponent({
-    components: { ColumnList },
+    components: { ColumnList, GlobalHeader },
     setup() {
         const list: ColumnPorps[] = [
             {
@@ -42,30 +48,9 @@ export default defineComponent({
             },
         ]
 
-        return { list }
+        return { list, currentUser }
     },
 })
 </script>
 
-<style lang="less">
-#app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-}
-
-#nav {
-    padding: 30px;
-
-    a {
-        font-weight: bold;
-        color: #2c3e50;
-
-        &.router-link-exact-active {
-            color: #42b983;
-        }
-    }
-}
-</style>
+<style lang="less"></style>
