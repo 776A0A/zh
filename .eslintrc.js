@@ -20,5 +20,6 @@ module.exports = {
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'prettier/prettier': ['error', prettierConfig],
         '@typescript-eslint/no-var-requires': 'off',
+        'no-case-declarations': 'off',
     },
 }
