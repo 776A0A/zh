@@ -3,7 +3,7 @@
  */
 const vueConfig = {
     chainWebpack: config => {
-        config.resolve.extensions.add('vue')
+        config.resolve.extensions.add('.vue')
     },
 }
 
