@@ -4,22 +4,6 @@
         <!-- <column-list :list="list" /> -->
         <form>
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">
-                    Email address
-                </label>
-                <input
-                    type="email"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    v-model="val"
-                    @blur="validateEmail"
-                />
-                <div id="emailHelp" class="form-text" v-if="error">
-                    {{ message }}
-                </div>
-            </div>
-            <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">
                     Password
                 </label>
@@ -28,6 +12,12 @@
                     class="form-control"
                     id="exampleInputPassword1"
                 />
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">
+                    Email address
+                </label>
+                <validate-input :rules="emailRules" />
             </div>
         </form>
     </div>
@@ -38,6 +28,7 @@ import { defineComponent, reactive, toRefs } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnPorps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from '@/components/GlobalHeader.vue'
+import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
 
 const currentUser: UserProps = {
     isLogin: true,
@@ -45,7 +36,7 @@ const currentUser: UserProps = {
 }
 
 export default defineComponent({
-    components: { GlobalHeader },
+    components: { GlobalHeader, ValidateInput },
     setup() {
         const list: ColumnPorps[] = [
             {
@@ -76,25 +67,22 @@ export default defineComponent({
             },
         ]
 
+        const emailRules: RulesProp = [
+            { type: 'required', message: 'Can not be empty' },
+            { type: 'email', message: 'Should be valid Email' },
+        ]
+
         const emailRef = reactive({
             val: '',
             error: false,
             message: '',
         })
-        const validateEmail = () => {
-            if (emailRef.val.trim() === '') {
-                emailRef.error = true
-                emailRef.message = 'Can not be empty'
-            } else if (!/\w+@\w+\.\w+/.test(emailRef.val)) {
-                emailRef.error = true
-                emailRef.message = 'Should be valid Email'
-            } else {
-                emailRef.error = false
-                emailRef.message = ''
-            }
-        }
 
-        return { list, currentUser, ...toRefs(emailRef), validateEmail }
+        return {
+            list,
+            currentUser,
+            emailRules,
+        }
     },
 })
 </script>
