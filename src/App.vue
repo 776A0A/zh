@@ -12,7 +12,6 @@
                     :rules="emailRules"
                     v-model="email"
                     placeholder="Please input your email address"
-                    ref="inputRef"
                 />
             </div>
             <div class="mb-3">
@@ -89,11 +88,8 @@ export default defineComponent({
 
         const email = ref('')
         const password = ref('')
-        const inputRef = ref<any>()
 
         const onFormSubmit = (res: boolean) => {
-            console.log(inputRef.value)
-
             console.log(res)
         }
 
@@ -105,7 +101,6 @@ export default defineComponent({
             email,
             password,
             onFormSubmit,
-            inputRef,
         }
     },
 })
