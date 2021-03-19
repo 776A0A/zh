@@ -4,7 +4,8 @@
             type="text"
             class="form-control"
             :class="{ 'is-invalid': inputRef.error }"
-            v-model="inputRef.val"
+            :value="modelValue"
+            @input="updateValue"
             @blur="validater"
         />
         <span class="invalid-feedback" v-if="inputRef.error">
@@ -27,12 +28,13 @@ export type RulesProp = RuleProp[]
 
 export default defineComponent({
     name: 'ValidateInput',
+    emits: ['update:modelValue'],
     props: {
         rules: Array as PropType<RulesProp>,
+        modelValue: String,
     },
-    setup(props) {
+    setup(props, { emit }) {
         const inputRef = reactive({
-            val: '',
             error: false,
             message: '',
         })
@@ -46,10 +48,10 @@ export default defineComponent({
 
                 switch (rule.type) {
                     case 'required':
-                        passed = inputRef.val.trim() !== ''
+                        passed = props.modelValue?.trim() !== ''
                         break
                     case 'email':
-                        passed = emailReg.test(inputRef.val)
+                        passed = emailReg.test(props.modelValue || '')
                         break
                     default:
                         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -63,7 +65,13 @@ export default defineComponent({
             inputRef.error = !passed
         }
 
-        return { inputRef, validater }
+        const updateValue = (e: InputEvent) => {
+            // 断言为更具体的元素
+            const value = (e.target as HTMLInputElement).value
+            emit('update:modelValue', value)
+        }
+
+        return { inputRef, validater, updateValue }
     },
 })
 </script>

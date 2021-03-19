@@ -17,14 +17,14 @@
                 <label for="exampleInputPassword1" class="form-label">
                     Email address
                 </label>
-                <validate-input :rules="emailRules" />
+                <validate-input :rules="emailRules" v-model="emailVal" />
             </div>
         </form>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
+import { defineComponent, reactive, ref, toRefs } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnPorps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from '@/components/GlobalHeader.vue'
@@ -72,16 +72,13 @@ export default defineComponent({
             { type: 'email', message: 'Should be valid Email' },
         ]
 
-        const emailRef = reactive({
-            val: '',
-            error: false,
-            message: '',
-        })
+        const emailVal = ref('')
 
         return {
             list,
             currentUser,
             emailRules,
+            emailVal,
         }
     },
 })
