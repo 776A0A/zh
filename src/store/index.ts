@@ -48,9 +48,13 @@ export default createStore<GlobalDataProps>({
             },
         ],
         posts: [],
-        user: { isLogin: true, name: 'wj' },
+        user: { isLogin: false },
     },
-    mutations: {},
+    mutations: {
+        login(state) {
+            state.user = { ...state.user, name: 'wj', isLogin: true }
+        },
+    },
     actions: {},
     modules: {},
 })

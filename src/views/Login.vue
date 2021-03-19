@@ -33,6 +33,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
 import ValidateForm from '@/components/ValidateForm.vue'
@@ -42,6 +43,7 @@ export default defineComponent({
     components: { ValidateInput, ValidateForm },
     setup() {
         const router = useRouter()
+        const store = useStore()
 
         const emailRules: RulesProp = [
             { type: 'required', message: 'Can not be empty' },
@@ -57,6 +59,7 @@ export default defineComponent({
         const onFormSubmit = (res: boolean) => {
             if (!res) return
             router.push('/')
+            store.commit('login')
         }
 
         return {
