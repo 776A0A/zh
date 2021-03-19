@@ -5,7 +5,9 @@
         <a href="#" class="navbar-brand">zh</a>
         <ul v-if="!user.isLogin" class="list-inline mb-0">
             <li class="list-inline-item">
-                <a href="#" class="btn btn-outline-light my-2">登录</a>
+                <router-link to="/login" class="btn btn-outline-light my-2">
+                    登录
+                </router-link>
             </li>
             <li class="list-inline-item">
                 <a href="#" class="btn btn-outline-light my-2">注册</a>
@@ -33,12 +35,7 @@
 import { defineComponent, PropType } from 'vue'
 import DropDown from '@/components/DropDown.vue'
 import DropDownItem from '@/components/DropDownItem.vue'
-
-export interface UserProps {
-    isLogin: boolean
-    name?: string
-    id?: number
-}
+import { UserProps } from '@/store'
 
 export default defineComponent({
     name: 'GlobalHeader',
