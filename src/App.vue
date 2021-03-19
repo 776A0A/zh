@@ -2,7 +2,7 @@
     <div class="container">
         <global-header :user="currentUser" />
         <!-- <column-list :list="list" /> -->
-        <form>
+        <validate-form @form-submit="onFormSubmit">
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">
                     Email address
@@ -12,6 +12,7 @@
                     :rules="emailRules"
                     v-model="email"
                     placeholder="Please input your email address"
+                    ref="inputRef"
                 />
             </div>
             <div class="mb-3">
@@ -25,7 +26,11 @@
                     placeholder="Please input your password"
                 />
             </div>
-        </form>
+            <template #submit>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-danger">Reset</button>
+            </template>
+        </validate-form>
     </div>
 </template>
 
@@ -35,6 +40,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnPorps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from '@/components/GlobalHeader.vue'
 import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
+import ValidateForm from '@/components/ValidateForm.vue'
 
 const currentUser: UserProps = {
     isLogin: true,
@@ -42,7 +48,7 @@ const currentUser: UserProps = {
 }
 
 export default defineComponent({
-    components: { GlobalHeader, ValidateInput },
+    components: { GlobalHeader, ValidateInput, ValidateForm },
     setup() {
         const list: ColumnPorps[] = [
             {
@@ -83,6 +89,13 @@ export default defineComponent({
 
         const email = ref('')
         const password = ref('')
+        const inputRef = ref<any>()
+
+        const onFormSubmit = (res: boolean) => {
+            console.log(inputRef.value)
+
+            console.log(res)
+        }
 
         return {
             list,
@@ -91,6 +104,8 @@ export default defineComponent({
             passwordReuls,
             email,
             password,
+            onFormSubmit,
+            inputRef,
         }
     },
 })
