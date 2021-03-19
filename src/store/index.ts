@@ -1,5 +1,15 @@
 import { createStore } from 'vuex'
 import plugins from './plugins'
+import axios from 'axios'
+
+axios
+    .post('https://yapi.baidu.com/mock/43546/login', {
+        email: '123@qq.com',
+        password: '123',
+    })
+    .then(res => {
+        console.log(res)
+    })
 
 export interface ColumnProps {
     id: number
