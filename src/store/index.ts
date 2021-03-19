@@ -1,6 +1,4 @@
 import { createStore } from 'vuex'
-import { ColumnProps } from '@/components/ColumnList.vue'
-
 
 export interface ColumnProps {
     id: number
