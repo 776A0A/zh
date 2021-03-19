@@ -1,7 +1,7 @@
 <template>
     <div class="validate-input-container pb-3">
         <input
-            type="text"
+            v-bind="$attrs"
             class="form-control"
             :class="{ 'is-invalid': inputRef.error }"
             :value="modelValue"
@@ -28,6 +28,7 @@ export type RulesProp = RuleProp[]
 
 export default defineComponent({
     name: 'ValidateInput',
+    inheritAttrs: false,
     emits: ['update:modelValue'],
     props: {
         rules: Array as PropType<RulesProp>,

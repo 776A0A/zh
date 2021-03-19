@@ -5,19 +5,25 @@
         <form>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">
-                    Password
+                    Email address
                 </label>
-                <input
-                    type="password"
-                    class="form-control"
-                    id="exampleInputPassword1"
+                <validate-input
+                    type="email"
+                    :rules="emailRules"
+                    v-model="email"
+                    placeholder="Please input your email address"
                 />
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">
-                    Email address
+                    Password
                 </label>
-                <validate-input :rules="emailRules" v-model="emailVal" />
+                <validate-input
+                    type="password"
+                    v-model="password"
+                    :rules="passwordReuls"
+                    placeholder="Please input your password"
+                />
             </div>
         </form>
     </div>
@@ -71,14 +77,20 @@ export default defineComponent({
             { type: 'required', message: 'Can not be empty' },
             { type: 'email', message: 'Should be valid Email' },
         ]
+        const passwordReuls: RulesProp = [
+            { type: 'required', message: 'Can not be empty' },
+        ]
 
-        const emailVal = ref('')
+        const email = ref('')
+        const password = ref('')
 
         return {
             list,
             currentUser,
             emailRules,
-            emailVal,
+            passwordReuls,
+            email,
+            password,
         }
     },
 })
