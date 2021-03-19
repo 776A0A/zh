@@ -31,13 +31,32 @@
 import { defineComponent, ref } from 'vue'
 import ValidateForm from '@/components/ValidateForm.vue'
 import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
+import { GlobalDataProps, PostProps } from '@/store'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
     name: 'CreatePost',
     components: { ValidateForm, ValidateInput },
     setup() {
-        const onFormSubmit = () => {
-            //
+        const title = ref('')
+        const content = ref('')
+        const store = useStore<GlobalDataProps>()
+        const router = useRouter()
+
+        const onFormSubmit = (res: boolean) => {
+            if (!res) return
+            const { columnId } = store.state.user
+            if (!columnId) return
+            const post: PostProps = {
+                id: Date.now(),
+                title: title.value,
+                content: content.value,
+                columnId,
+                createAt: new Date().toLocaleString(),
+            }
+            store.commit('createPost', post)
+            router.push(`/column/${columnId}`)
         }
 
         const titleRules: RulesProp = [
@@ -46,9 +65,6 @@ export default defineComponent({
         const contentRules: RulesProp = [
             { type: 'required', message: 'Can not be empty' },
         ]
-
-        const title = ref('')
-        const content = ref('')
 
         return { onFormSubmit, title, titleRules, content, contentRules }
     },

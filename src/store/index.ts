@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import plugins from './plugins'
 
 export interface ColumnProps {
     id: number
@@ -9,12 +10,17 @@ export interface ColumnProps {
 
 export interface PostProps {
     id: number
+    title: string
+    content: string
+    columnId: number
+    createAt: string
 }
 
 export interface UserProps {
     isLogin: boolean
     name?: string
     id?: number
+    columnId?: number
 }
 
 export interface GlobalDataProps {
@@ -63,10 +69,19 @@ export default createStore<GlobalDataProps>({
             state.posts.filter(p => p.id === id),
     },
     mutations: {
-        login(state) {
-            state.user = { ...state.user, name: 'wj', isLogin: true }
+        login: state => {
+            state.user = {
+                ...state.user,
+                name: 'wj',
+                isLogin: true,
+                columnId: 1,
+            }
+        },
+        createPost: (state, post: PostProps) => {
+            state.posts.push(post)
         },
     },
     actions: {},
     modules: {},
+    plugins,
 })
