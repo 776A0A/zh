@@ -2,42 +2,44 @@
     <div class="container">
         <global-header :user="currentUser" />
         <!-- <column-list :list="list" /> -->
-        <form>
+        <validate-form @form-submit="onFormSubmit">
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">
+                <label for="exampleInputPassword1" class="form-label">
                     Email address
                 </label>
-                <input
+                <validate-input
                     type="email"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    v-model="val"
-                    @blur="validateEmail"
+                    :rules="emailRules"
+                    v-model="email"
+                    placeholder="Please input your email address"
                 />
-                <div id="emailHelp" class="form-text" v-if="error">
-                    {{ message }}
-                </div>
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">
                     Password
                 </label>
-                <input
+                <validate-input
                     type="password"
-                    class="form-control"
-                    id="exampleInputPassword1"
+                    v-model="password"
+                    :rules="passwordReuls"
+                    placeholder="Please input your password"
                 />
             </div>
-        </form>
+            <template #submit>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-danger">Reset</button>
+            </template>
+        </validate-form>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
+import { defineComponent, reactive, ref, toRefs } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnPorps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from '@/components/GlobalHeader.vue'
+import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
+import ValidateForm from '@/components/ValidateForm.vue'
 
 const currentUser: UserProps = {
     isLogin: true,
@@ -45,7 +47,7 @@ const currentUser: UserProps = {
 }
 
 export default defineComponent({
-    components: { GlobalHeader },
+    components: { GlobalHeader, ValidateInput, ValidateForm },
     setup() {
         const list: ColumnPorps[] = [
             {
@@ -76,25 +78,30 @@ export default defineComponent({
             },
         ]
 
-        const emailRef = reactive({
-            val: '',
-            error: false,
-            message: '',
-        })
-        const validateEmail = () => {
-            if (emailRef.val.trim() === '') {
-                emailRef.error = true
-                emailRef.message = 'Can not be empty'
-            } else if (!/\w+@\w+\.\w+/.test(emailRef.val)) {
-                emailRef.error = true
-                emailRef.message = 'Should be valid Email'
-            } else {
-                emailRef.error = false
-                emailRef.message = ''
-            }
+        const emailRules: RulesProp = [
+            { type: 'required', message: 'Can not be empty' },
+            { type: 'email', message: 'Should be valid Email' },
+        ]
+        const passwordReuls: RulesProp = [
+            { type: 'required', message: 'Can not be empty' },
+        ]
+
+        const email = ref('')
+        const password = ref('')
+
+        const onFormSubmit = (res: boolean) => {
+            console.log(res)
         }
 
-        return { list, currentUser, ...toRefs(emailRef), validateEmail }
+        return {
+            list,
+            currentUser,
+            emailRules,
+            passwordReuls,
+            email,
+            password,
+            onFormSubmit,
+        }
     },
 })
 </script>
