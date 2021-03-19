@@ -21,5 +21,6 @@ module.exports = {
         'prettier/prettier': ['error', prettierConfig],
         '@typescript-eslint/no-var-requires': 'off',
         'no-case-declarations': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
     },
 }
