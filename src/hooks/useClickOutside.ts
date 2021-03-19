@@ -6,6 +6,7 @@ const useClickOutside = (elementRef: Ref<HTMLElement | null>) => {
     const handler = (evt: MouseEvent) => {
         if (!elementRef.value) return
 
+        // evt.target 的值可能是 null，所以要断言
         if (elementRef.value.contains(evt.target as HTMLElement)) {
             isClickOutside.value = true
         } else {
