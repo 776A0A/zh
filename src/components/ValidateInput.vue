@@ -6,7 +6,7 @@
             :class="{ 'is-invalid': inputRef.error }"
             :value="modelValue"
             @input="updateValue"
-            @blur="validater"
+            @blur="validateInput"
         />
         <span class="invalid-feedback" v-if="inputRef.error">
             {{ inputRef.message }}
@@ -40,8 +40,8 @@ export default defineComponent({
             message: '',
         })
 
-        const validater = () => {
-            if (!props.rules) return
+        const validateInput = () => {
+            if (!props.rules) return true
 
             const passed = props.rules.every(rule => {
                 let passed = true
@@ -64,6 +64,8 @@ export default defineComponent({
             })
 
             inputRef.error = !passed
+
+            return passed
         }
 
         const updateValue = (e: InputEvent) => {
@@ -72,7 +74,7 @@ export default defineComponent({
             emit('update:modelValue', value)
         }
 
-        return { inputRef, validater, updateValue }
+        return { inputRef, validateInput, updateValue }
     },
 })
 </script>
