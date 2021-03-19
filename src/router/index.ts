@@ -18,6 +18,11 @@ const routes: Array<RouteRecordRaw> = [
         props: true,
         component: import('@/views/Column.vue'),
     },
+    {
+        path: '/create',
+        name: 'CreatePost',
+        component: import('@/views/CreatePost.vue'),
+    },
 ]
 
 const router = createRouter({
