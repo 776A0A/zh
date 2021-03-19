@@ -1,8 +1,16 @@
 import { createStore } from 'vuex'
 import { ColumnProps } from '@/components/ColumnList.vue'
 
+
+export interface ColumnProps {
+    id: number
+    title: string
+    avatar?: string
+    description: string
+}
+
 export interface PostProps {
-    id: string
+    id: number
 }
 
 export interface UserProps {
@@ -49,6 +57,12 @@ export default createStore<GlobalDataProps>({
         ],
         posts: [],
         user: { isLogin: false },
+    },
+    getters: {
+        getColumnById: state => (id: number) =>
+            state.columns.find(c => c.id === id),
+        getPostsByCid: state => (id: number) =>
+            state.posts.filter(p => p.id === id),
     },
     mutations: {
         login(state) {
