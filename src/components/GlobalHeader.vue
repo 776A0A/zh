@@ -2,7 +2,7 @@
     <nav
         class="navbar navbar-dark bg-primary justify-content-between mb-4 px-4"
     >
-        <a href="#" class="navbar-brand">zh</a>
+        <router-link to="/" class="navbar-brand">zh</router-link>
         <ul v-if="!user.isLogin" class="list-inline mb-0">
             <li class="list-inline-item">
                 <router-link to="/login" class="btn btn-outline-light my-2">
@@ -10,7 +10,9 @@
                 </router-link>
             </li>
             <li class="list-inline-item">
-                <a href="#" class="btn btn-outline-light my-2">注册</a>
+                <router-link to="/login" class="btn btn-outline-light my-2">
+                    注册
+                </router-link>
             </li>
         </ul>
         <ul v-else class="list-inline mb-0">
