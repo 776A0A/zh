@@ -37,6 +37,7 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
 import ValidateForm from '@/components/ValidateForm.vue'
+import axios from 'axios'
 
 export default defineComponent({
     name: 'Login',
@@ -58,8 +59,15 @@ export default defineComponent({
 
         const onFormSubmit = (res: boolean) => {
             if (!res) return
-            router.push('/')
-            store.commit('login')
+            axios
+                .post('http://127.0.0.1:4523/mock/379617/login', {
+                    email: email.value,
+                    password: password.value,
+                })
+                .then(res => {
+                    router.push('/')
+                    store.commit('login')
+                })
         }
 
         return {

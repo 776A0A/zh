@@ -1,15 +1,6 @@
 import { createStore } from 'vuex'
 import plugins from './plugins'
-import axios from 'axios'
-
-axios
-    .post('https://yapi.baidu.com/mock/43546/login', {
-        email: '123@qq.com',
-        password: '123',
-    })
-    .then(res => {
-        console.log(res)
-    })
+import axios, { AxiosResponse } from 'axios'
 
 export interface ColumnProps {
     id: number
@@ -41,34 +32,7 @@ export interface GlobalDataProps {
 
 export default createStore<GlobalDataProps>({
     state: {
-        columns: [
-            {
-                description: '234',
-                id: 0,
-                title: '3',
-            },
-            {
-                description: '234',
-                id: 1,
-                title: '3',
-                avatar:
-                    'https://tse1-mm.cn.bing.net/th?id=OIP.Sz2t3UycZ358frC6NaJxlwHaIK&w=185&h=204&c=8&rs=1&qlt=90&pid=3.1&rm=2',
-            },
-            {
-                description: '234',
-                id: 2,
-                title: '3',
-                avatar:
-                    'https://tse1-mm.cn.bing.net/th?id=OIP.Sz2t3UycZ358frC6NaJxlwHaIK&w=185&h=204&c=8&rs=1&qlt=90&pid=3.1&rm=2',
-            },
-            {
-                description: '234',
-                id: 3,
-                title: '3',
-                avatar:
-                    'https://tse1-mm.cn.bing.net/th?id=OIP.Sz2t3UycZ358frC6NaJxlwHaIK&w=185&h=204&c=8&rs=1&qlt=90&pid=3.1&rm=2',
-            },
-        ],
+        columns: [],
         posts: [],
         user: { isLogin: false },
     },
@@ -90,8 +54,25 @@ export default createStore<GlobalDataProps>({
         createPost: (state, post: PostProps) => {
             state.posts.push(post)
         },
+        fetchColumns: (state, payload: ColumnProps[]) => {
+            state.columns = payload
+        },
     },
-    actions: {},
+    actions: {
+        fetchColumns: ({ commit }) => {
+            axios
+                .get('http://127.0.0.1:4523/mock/379617/columns')
+                .then((res: AxiosResponse<ResponseData<ColumnProps>>) => {
+                    commit('fetchColumns', res.data.data)
+                })
+        },
+    },
     modules: {},
     plugins,
 })
+
+interface ResponseData<T> {
+    code: number
+    message: string
+    data: T[]
+}
