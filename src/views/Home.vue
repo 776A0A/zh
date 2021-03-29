@@ -5,6 +5,7 @@
             src="../assets/logo.png"
             :style="{ margin: 'auto', display: 'block' }"
         />
+        <uploader />
         <column-list :list="list" />
     </div>
 </template>
@@ -14,10 +15,11 @@ import { computed, defineComponent, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '@/store'
 import ColumnList from '../components/ColumnList.vue'
+import Uploader from '@/components/Uploader.vue'
 
 export default defineComponent({
     name: 'Home',
-    components: { ColumnList },
+    components: { ColumnList, Uploader },
     setup() {
         const store = useStore<GlobalDataProps>()
         const list = computed(() => store.state.columns)
